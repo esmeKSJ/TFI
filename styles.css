@@ -14,6 +14,35 @@
     --warning-bg: #fcf5e3;
     --radius: 20px;
     --shadow: 0 12px 36px rgb(30 45 33 / 6%);
+    --input-border: #ccd4cc;
+    --accent: #5b7d62;
+    --badge-bg: #f0f2ef;
+    --badge-fg: #5d685f;
+    color-scheme: light;
+  }
+
+  /* Dark mode — Green Gray palette:
+     bg #051824 · surface #162936 · muted-border #3b5265 · accent #27e9b5 */
+  [data-theme="dark"] {
+    --green: #27e9b5;
+    --green-light: rgb(39 233 181 / 12%);
+    --dark: #eef6f3;
+    --muted: #9db4c0;
+    --background: #051824;
+    --white: #162936;
+    --border: #3b5265;
+    --success: #27e9b5;
+    --success-bg: rgb(39 233 181 / 12%);
+    --danger: #ff9d9d;
+    --danger-bg: rgb(255 157 157 / 12%);
+    --warning: #ffd47e;
+    --warning-bg: rgb(255 212 126 / 12%);
+    --shadow: 0 12px 36px rgb(0 0 0 / 45%);
+    --input-border: #3b5265;
+    --accent: #27e9b5;
+    --badge-bg: rgb(59 82 101 / 55%);
+    --badge-fg: #c8d8e0;
+    color-scheme: dark;
   }
   
   * {
@@ -26,6 +55,7 @@
     background: var(--background);
     font-family: Inter, "Segoe UI", Arial, sans-serif;
     line-height: 1.5;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
   
   button,
@@ -98,7 +128,7 @@
   }
   
   :focus-visible {
-    outline: 3px solid #719477;
+    outline: 3px solid var(--accent);
     outline-offset: 3px;
   }
   
@@ -134,7 +164,23 @@
     height: 42px;
     border-radius: 14px;
     background: var(--green);
+    color: #051824;
     font-size: 0.85rem;
+  }
+
+  .theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--dark);
+    padding: 10px 12px;
+    border-radius: 11px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
   }
   
   .nav {
@@ -323,17 +369,17 @@
     min-width: 0;
     padding: 12px 13px;
     background: var(--white);
-    border: 1px solid #ccd4cc;
+    border: 1px solid var(--input-border);
     border-radius: 11px;
     color: var(--dark);
   }
-  
+
   input[type="checkbox"],
   input[type="radio"] {
     width: 18px;
     height: 18px;
     padding: 0;
-    accent-color: #5b7d62;
+    accent-color: var(--accent);
     flex: 0 0 auto;
   }
   
@@ -387,7 +433,11 @@
   
   .btn.primary {
     background: var(--green);
-    color: var(--dark);
+    color: #222222;
+  }
+
+  [data-theme="dark"] .btn.primary {
+    color: #051824;
   }
   
   .btn.secondary {
@@ -440,7 +490,7 @@
   }
   
   .role-switch button.selected {
-    border-color: #6c9173;
+    border-color: var(--accent);
     background: var(--green-light);
     color: var(--dark);
     font-weight: 750;
@@ -535,7 +585,7 @@
   
   .pro-card:hover {
     transform: translateY(-3px);
-    border-color: #93b29a;
+    border-color: var(--accent);
   }
   
   .pro-card h3 {
@@ -573,8 +623,8 @@
     padding: 5px 8px;
     border-radius: 7px;
     font-size: 0.72rem;
-    background: #f0f2ef;
-    color: #5d685f;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
   }
   
   .badge.verified,
@@ -878,6 +928,47 @@
   
   dialog::backdrop {
     background: rgb(20 30 22 / 45%);
+  }
+
+  /* Superficies grandes en dark: se usa surface + borde en vez de
+     pleno acento para no encandilar y mantener la paleta. */
+  [data-theme="dark"] .hero,
+  [data-theme="dark"] .auth-intro {
+    background: linear-gradient(135deg, #162936 0%, #051824 100%);
+    border: 1px solid #3b5265;
+    color: #eef6f3;
+  }
+
+  [data-theme="dark"] .hero .eyebrow,
+  [data-theme="dark"] .auth-intro .eyebrow {
+    color: #27e9b5;
+  }
+
+  [data-theme="dark"] .brand-mark {
+    color: #051824;
+  }
+
+  [data-theme="dark"] dialog::backdrop {
+    background: rgb(5 24 36 / 70%);
+  }
+
+  [data-theme="dark"] .qr-demo svg {
+    border-color: #162936;
+    outline-color: #3b5265;
+  }
+
+  [data-theme="dark"] img {
+    filter: saturate(0.95);
+  }
+
+  [data-theme="dark"] select option {
+    background-color: #162936;
+    color: #eef6f3;
+  }
+
+  [data-theme="dark"] input::placeholder,
+  [data-theme="dark"] textarea::placeholder {
+    color: #7d95a3;
   }
   
   .modal-head {

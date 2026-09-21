@@ -5,6 +5,7 @@
    ========================================================= */
 
 const STORAGE_KEY = "oficios-tucuman-mvp-v1";
+const THEME_KEY = "oficios-tucuman-theme";
 
 const DEPARTMENTS = [
   "San Miguel de Tucumán",
@@ -60,6 +61,44 @@ const ui = {
   month: "",
   date: ""
 };
+
+/* =========================================================
+   TEMA CLARO / OSCURO (paleta Green Gray)
+   ========================================================= */
+
+function getPreferredTheme() {
+  const stored = localStorage.getItem(THEME_KEY);
+  if (stored === "dark" || stored === "light") return stored;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyTheme(theme) {
+  const next = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch { /* almacenamiento no disponible: se mantiene solo en memoria */ }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", next === "dark" ? "#051824" : "#C2D8C4");
+  const toggle = document.querySelector('[data-action="toggle-theme"]');
+  if (toggle) {
+    const isDark = next === "dark";
+    toggle.setAttribute("aria-pressed", String(isDark));
+    toggle.setAttribute("aria-label", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    toggle.textContent = isDark ? "☀ Claro" : "🌙 Oscuro";
+  }
+  return next;
+}
+
+function currentTheme() {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function toggleTheme() {
+  applyTheme(currentTheme() === "dark" ? "light" : "dark");
+}
 
 /* =========================================================
    UTILIDADES
@@ -163,15 +202,19 @@ function avatar(name = "OT") {
     .join("")
     .toUpperCase();
 
+  const isDark = document.documentElement.dataset.theme === "dark";
+  const bg = isDark ? "#27e9b5" : "#c2d8c4";
+  const fg = isDark ? "#051824" : "#222222";
+
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
-      <rect width="240" height="240" rx="45" fill="#c2d8c4"/>
+      <rect width="240" height="240" rx="45" fill="${bg}"/>
       <text
         x="120" y="139"
         text-anchor="middle"
         font-family="Arial"
         font-size="76"
-        fill="#222"
+        fill="${fg}"
       >${E(initials)}</text>
     </svg>
   `;
@@ -861,6 +904,7 @@ function dayEditorHTML(pro) {
 
 function renderHeader(route) {
   const user = currentUser();
+  const isDark = currentTheme() === "dark";
 
   const links = !user ? [] : user.role === "client" ? [
     ["home", "Inicio / Buscar"],
@@ -896,6 +940,14 @@ function renderHeader(route) {
             <a href="#login">Ingresar</a>
             <a href="#register">Registrarse</a>
           `}
+
+          <button
+            type="button"
+            class="theme-toggle"
+            data-action="toggle-theme"
+            aria-pressed="${isDark}"
+            aria-label="${isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}"
+          >${isDark ? "☀ Claro" : "🌙 Oscuro"}</button>
         </nav>
       </div>
     </div>
@@ -2769,6 +2821,10 @@ document.addEventListener("click", event => {
         closeModal();
         break;
 
+      case "toggle-theme":
+        toggleTheme();
+        break;
+
       case "logout":
         if (commit(state => {
           state.sessionId = null;
@@ -3148,6 +3204,15 @@ window.addEventListener("storage", event => {
    ========================================================= */
 
 async function boot() {
+  applyTheme(getPreferredTheme());
+
+  // Si el usuario no eligió tema manual, seguir al sistema en vivo.
+  window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", event => {
+    try {
+      if (!localStorage.getItem(THEME_KEY)) applyTheme(event.matches ? "dark" : "light");
+    } catch { /* ignorar */ }
+  });
+
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
 
