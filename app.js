@@ -165,13 +165,13 @@ function avatar(name = "OT") {
 
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
-      <rect width="240" height="240" rx="45" fill="#c2d8c4"/>
+      <rect width="240" height="240" rx="45" fill="#10bbc3"/>
       <text
         x="120" y="139"
         text-anchor="middle"
         font-family="Arial"
         font-size="76"
-        fill="#222"
+        fill="#051a2d"
       >${E(initials)}</text>
     </svg>
   `;
@@ -1389,6 +1389,7 @@ function homePage(user) {
 
     <div class="searchbar">
       <input
+
         id="search-input"
         type="search"
         value="${E(ui.search)}"
@@ -1874,7 +1875,7 @@ function qrIllustration() {
   return `
     <svg viewBox="0 0 100 100" role="img" aria-label="QR ilustrativo, no escaneable">
       <rect width="100" height="100" fill="white"/>
-      <g fill="#222">
+      <g fill="#051a2d">
         <path d="M0 0h30v30H0z M70 0h30v30H70z M0 70h30v30H0z"/>
         <path d="M40 0h10v10H40z M40 20h20v10H40z M40 40h10v20H40z
           M60 40h20v10H60z M90 40h10v20H90z M0 40h20v10H0z
@@ -1884,7 +1885,7 @@ function qrIllustration() {
       <g fill="white">
         <path d="M6 6h18v18H6z M76 6h18v18H76z M6 76h18v18H6z"/>
       </g>
-      <g fill="#222">
+      <g fill="#051a2d">
         <path d="M11 11h8v8H11z M81 11h8v8H81z M11 81h8v8H11z"/>
       </g>
     </svg>

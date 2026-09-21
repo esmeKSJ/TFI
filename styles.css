@@ -1,19 +1,23 @@
 :root {
-    --green: #c2d8c4;
-    --green-light: #edf4ee;
-    --dark: #222222;
-    --muted: #68716b;
-    --background: #f6f7f5;
-    --white: #ffffff;
-    --border: #e1e6e0;
-    --success: #27613a;
-    --success-bg: #eaf4ec;
-    --danger: #a23b3b;
-    --danger-bg: #faeeee;
-    --warning: #826019;
-    --warning-bg: #fcf5e3;
+    --green: #10bbc3;
+    --green-dark: #068187;
+    --green-light: #d9f0f2;
+    --accent: #fea24f;
+    --accent-dark: #8a4d0e;
+    --accent-bg: #fde4c3;
+    --dark: #051a2d;
+    --muted: #5b7178;
+    --background: #f1f4f5;
+    --white: #d5ecee;
+    --border: #d9e2e5;
+    --success: #068187;
+    --success-bg: #d5ecee;
+    --danger: #a60e35;
+    --danger-bg: #f8dde4;
+    --warning: #8a4d0e;
+    --warning-bg: #fde4c3;
     --radius: 20px;
-    --shadow: 0 12px 36px rgb(30 45 33 / 6%);
+    --shadow: 0 12px 36px rgb(5 26 45 / 10%);
   }
   
   * {
@@ -98,7 +102,7 @@
   }
   
   :focus-visible {
-    outline: 3px solid #719477;
+    outline: 3px solid #068187;
     outline-offset: 3px;
   }
   
@@ -133,7 +137,8 @@
     width: 42px;
     height: 42px;
     border-radius: 14px;
-    background: var(--green);
+    background: var(--accent);
+    color: var(--dark);
     font-size: 0.85rem;
   }
   
@@ -212,7 +217,8 @@
   
   .auth-intro {
     padding: 46px 36px;
-    background: var(--green);
+    background: var(--dark);
+    color: var(--background);
     border-radius: 28px;
     min-height: 510px;
     display: flex;
@@ -227,6 +233,7 @@
   
   .auth-intro p {
     max-width: 360px;
+    color: #b9ccd2;
   }
   
   .eyebrow {
@@ -234,6 +241,29 @@
     letter-spacing: 1.8px;
     font-size: 0.72rem;
     font-weight: 800;
+    color: var(--accent);
+  }
+
+  .hero .eyebrow {
+    color: #e08a33;
+  }
+
+  .auth-intro .badge {
+    background: rgb(254 162 79 / 20%);
+    color: var(--accent);
+  }
+
+  .auth-intro .actions {
+    margin-top: 18px;
+  }
+
+  .hero .badge {
+    background: rgb(5 26 45 / 12%);
+    color: var(--dark);
+  }
+
+  .demo-code {
+    color: var(--accent-dark);
   }
   
   .auth-panel,
@@ -272,20 +302,24 @@
   }
   
   .hero {
-    background: var(--green);
+    background: var(--green-dark);
+    color: var(--dark);
     padding: 34px;
     border-radius: 26px;
     margin-bottom: 24px;
+    border: 1px solid var(--danger);
   }
   
   .hero h1 {
     max-width: 660px;
     margin: 12px 0;
+    color: #d5ecee;
   }
   
   .hero p {
     max-width: 650px;
     margin-bottom: 0;
+    color: #d5ecee;
   }
   
   .stack {
@@ -323,17 +357,18 @@
     min-width: 0;
     padding: 12px 13px;
     background: var(--white);
-    border: 1px solid #ccd4cc;
+    border: 1px solid #c3d2d6;
     border-radius: 11px;
     color: var(--dark);
   }
+  #search-input{ background-color: white;}
   
   input[type="checkbox"],
   input[type="radio"] {
     width: 18px;
     height: 18px;
     padding: 0;
-    accent-color: #5b7d62;
+    accent-color: #068187;
     flex: 0 0 auto;
   }
   
@@ -440,7 +475,7 @@
   }
   
   .role-switch button.selected {
-    border-color: #6c9173;
+    border-color: var(--green-dark);
     background: var(--green-light);
     color: var(--dark);
     font-weight: 750;
@@ -535,7 +570,7 @@
   
   .pro-card:hover {
     transform: translateY(-3px);
-    border-color: #93b29a;
+    border-color: var(--green);
   }
   
   .pro-card h3 {
@@ -573,8 +608,8 @@
     padding: 5px 8px;
     border-radius: 7px;
     font-size: 0.72rem;
-    background: #f0f2ef;
-    color: #5d685f;
+    background: #e4ecee;
+    color: #4a6269;
   }
   
   .badge.verified,
@@ -877,7 +912,7 @@
   }
   
   dialog::backdrop {
-    background: rgb(20 30 22 / 45%);
+    background: rgb(5 26 45 / 60%);
   }
   
   .modal-head {
