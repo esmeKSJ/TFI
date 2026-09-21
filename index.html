@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Encontrá profesionales y servicios en Tucumán."
+  >
+  <meta name="theme-color" content="#C2D8C4">
+  <title>Oficios Tucumán</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <header id="header"></header>
+
+  <main id="app" tabindex="-1">
+    <div class="loading">Cargando Oficios Tucumán…</div>
+  </main>
+
+  <footer class="footer">
+    <strong>Oficios Tucumán</strong>
+    <span>Profesionales cerca tuyo.</span>
+    <small>
+      MVP de demostración. Usá información ficticia.
+      La verificación de identidad no tiene validez oficial.
+    </small>
+  </footer>
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+    hidden
+  ></div>
+
+  <dialog id="modal" aria-labelledby="modal-title"></dialog>
+</body>
+</html>
