@@ -19,6 +19,28 @@
     --radius: 20px;
     --shadow: 0 12px 36px rgb(30 45 33 / 6%);
   }
+
+   [data-theme="dark"] {
+    --green: #27e9b5;
+    --green-light: rgb(39 233 181 / 12%);
+    --dark: #eef6f3;
+    --muted: #9db4c0;
+    --background: #051824;
+    --white: #162936;
+    --border: #3b5265;
+    --success: #27e9b5;
+    --success-bg: rgb(39 233 181 / 12%);
+    --danger: #ff9d9d;
+    --danger-bg: rgb(255 157 157 / 12%);
+    --warning: #ffd47e;
+    --warning-bg: rgb(255 212 126 / 12%);
+    --shadow: 0 12px 36px rgb(0 0 0 / 45%);
+    --input-border: #3b5265;
+    --accent: #27e9b5;
+    --badge-bg: rgb(59 82 101 / 55%);
+    --badge-fg: #c8d8e0;
+    color-scheme: dark;
+  }
   
   * {
     box-sizing: border-box;
