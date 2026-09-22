@@ -17,7 +17,7 @@
     --warning: #8a4d0e;
     --warning-bg: #fde4c3;
     --radius: 20px;
-    --shadow: 0 12px 36px rgb(5 26 45 / 10%);
+    --shadow: 0 12px 36px rgb(30 45 33 / 6%);
   }
   
   * {
@@ -30,6 +30,7 @@
     background: var(--background);
     font-family: Inter, "Segoe UI", Arial, sans-serif;
     line-height: 1.5;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
   
   button,
@@ -102,7 +103,7 @@
   }
   
   :focus-visible {
-    outline: 3px solid #068187;
+    outline: 3px solid #719477;
     outline-offset: 3px;
   }
   
@@ -137,9 +138,23 @@
     width: 42px;
     height: 42px;
     border-radius: 14px;
-    background: var(--accent);
-    color: var(--dark);
+    background: var(--green);
     font-size: 0.85rem;
+  }
+
+  .theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--dark);
+    padding: 10px 12px;
+    border-radius: 11px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
   }
   
   .nav {
@@ -357,18 +372,17 @@
     min-width: 0;
     padding: 12px 13px;
     background: var(--white);
-    border: 1px solid #c3d2d6;
+    border: 1px solid #ccd4cc;
     border-radius: 11px;
     color: var(--dark);
   }
-  #search-input{ background-color: white;}
   
   input[type="checkbox"],
   input[type="radio"] {
     width: 18px;
     height: 18px;
     padding: 0;
-    accent-color: #068187;
+    accent-color: #5b7d62;
     flex: 0 0 auto;
   }
   
@@ -422,7 +436,11 @@
   
   .btn.primary {
     background: var(--green);
-    color: var(--dark);
+    color: #222222;
+  }
+
+  [data-theme="dark"] .btn.primary {
+    color: #051824;
   }
   
   .btn.secondary {
@@ -475,7 +493,7 @@
   }
   
   .role-switch button.selected {
-    border-color: var(--green-dark);
+    border-color: #6c9173;
     background: var(--green-light);
     color: var(--dark);
     font-weight: 750;
@@ -570,7 +588,7 @@
   
   .pro-card:hover {
     transform: translateY(-3px);
-    border-color: var(--green);
+    border-color: #93b29a;
   }
   
   .pro-card h3 {
@@ -608,8 +626,8 @@
     padding: 5px 8px;
     border-radius: 7px;
     font-size: 0.72rem;
-    background: #e4ecee;
-    color: #4a6269;
+    background: #f0f2ef;
+    color: #5d685f;
   }
   
   .badge.verified,
@@ -913,6 +931,47 @@
   
   dialog::backdrop {
     background: rgb(5 26 45 / 60%);
+  }
+
+  /* Superficies grandes en dark: se usa surface + borde en vez de
+     pleno acento para no encandilar y mantener la paleta. */
+  [data-theme="dark"] .hero,
+  [data-theme="dark"] .auth-intro {
+    background: linear-gradient(135deg, #162936 0%, #051824 100%);
+    border: 1px solid #3b5265;
+    color: #eef6f3;
+  }
+
+  [data-theme="dark"] .hero .eyebrow,
+  [data-theme="dark"] .auth-intro .eyebrow {
+    color: #27e9b5;
+  }
+
+  [data-theme="dark"] .brand-mark {
+    color: #051824;
+  }
+
+  [data-theme="dark"] dialog::backdrop {
+    background: rgb(5 24 36 / 70%);
+  }
+
+  [data-theme="dark"] .qr-demo svg {
+    border-color: #162936;
+    outline-color: #3b5265;
+  }
+
+  [data-theme="dark"] img {
+    filter: saturate(0.95);
+  }
+
+  [data-theme="dark"] select option {
+    background-color: #162936;
+    color: #eef6f3;
+  }
+
+  [data-theme="dark"] input::placeholder,
+  [data-theme="dark"] textarea::placeholder {
+    color: #7d95a3;
   }
   
   .modal-head {

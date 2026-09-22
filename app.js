@@ -5,6 +5,7 @@
    ========================================================= */
 
 const STORAGE_KEY = "oficios-tucuman-mvp-v1";
+const THEME_KEY = "oficios-tucuman-theme";
 
 const DEPARTMENTS = [
   "San Miguel de Tucumán",
@@ -60,6 +61,44 @@ const ui = {
   month: "",
   date: ""
 };
+
+/* =========================================================
+   TEMA CLARO / OSCURO (paleta Green Gray)
+   ========================================================= */
+
+function getPreferredTheme() {
+  const stored = localStorage.getItem(THEME_KEY);
+  if (stored === "dark" || stored === "light") return stored;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyTheme(theme) {
+  const next = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch { /* almacenamiento no disponible: se mantiene solo en memoria */ }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", next === "dark" ? "#051824" : "#C2D8C4");
+  const toggle = document.querySelector('[data-action="toggle-theme"]');
+  if (toggle) {
+    const isDark = next === "dark";
+    toggle.setAttribute("aria-pressed", String(isDark));
+    toggle.setAttribute("aria-label", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    toggle.textContent = isDark ? "☀ Claro" : "🌙 Oscuro";
+  }
+  return next;
+}
+
+function currentTheme() {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function toggleTheme() {
+  applyTheme(currentTheme() === "dark" ? "light" : "dark");
+}
 
 /* =========================================================
    UTILIDADES
@@ -163,15 +202,19 @@ function avatar(name = "OT") {
     .join("")
     .toUpperCase();
 
+  const isDark = document.documentElement.dataset.theme === "dark";
+  const bg = isDark ? "#27e9b5" : "#c2d8c4";
+  const fg = isDark ? "#051824" : "#222222";
+
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
-      <rect width="240" height="240" rx="45" fill="#10bbc3"/>
+      <rect width="240" height="240" rx="45" fill="${bg}"/>
       <text
         x="120" y="139"
         text-anchor="middle"
         font-family="Arial"
         font-size="76"
-        fill="#051a2d"
+        fill="${fg}"
       >${E(initials)}</text>
     </svg>
   `;
@@ -861,6 +904,7 @@ function dayEditorHTML(pro) {
 
 function renderHeader(route) {
   const user = currentUser();
+  const isDark = currentTheme() === "dark";
 
   const links = !user ? [] : user.role === "client" ? [
     ["home", "Inicio / Buscar"],
@@ -896,6 +940,14 @@ function renderHeader(route) {
             <a href="#login">Ingresar</a>
             <a href="#register">Registrarse</a>
           `}
+
+          <button
+            type="button"
+            class="theme-toggle"
+            data-action="toggle-theme"
+            aria-pressed="${isDark}"
+            aria-label="${isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}"
+          >${isDark ? "☀ Claro" : "🌙 Oscuro"}</button>
         </nav>
       </div>
     </div>
@@ -1389,7 +1441,6 @@ function homePage(user) {
 
     <div class="searchbar">
       <input
-
         id="search-input"
         type="search"
         value="${E(ui.search)}"
@@ -1875,7 +1926,7 @@ function qrIllustration() {
   return `
     <svg viewBox="0 0 100 100" role="img" aria-label="QR ilustrativo, no escaneable">
       <rect width="100" height="100" fill="white"/>
-      <g fill="#051a2d">
+      <g fill="#222">
         <path d="M0 0h30v30H0z M70 0h30v30H70z M0 70h30v30H0z"/>
         <path d="M40 0h10v10H40z M40 20h20v10H40z M40 40h10v20H40z
           M60 40h20v10H60z M90 40h10v20H90z M0 40h20v10H0z
@@ -1885,7 +1936,7 @@ function qrIllustration() {
       <g fill="white">
         <path d="M6 6h18v18H6z M76 6h18v18H76z M6 76h18v18H6z"/>
       </g>
-      <g fill="#051a2d">
+      <g fill="#222">
         <path d="M11 11h8v8H11z M81 11h8v8H81z M11 81h8v8H11z"/>
       </g>
     </svg>
@@ -2770,6 +2821,10 @@ document.addEventListener("click", event => {
         closeModal();
         break;
 
+      case "toggle-theme":
+        toggleTheme();
+        break;
+
       case "logout":
         if (commit(state => {
           state.sessionId = null;
@@ -3149,6 +3204,15 @@ window.addEventListener("storage", event => {
    ========================================================= */
 
 async function boot() {
+  applyTheme(getPreferredTheme());
+
+  // Si el usuario no eligió tema manual, seguir al sistema en vivo.
+  window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", event => {
+    try {
+      if (!localStorage.getItem(THEME_KEY)) applyTheme(event.matches ? "dark" : "light");
+    } catch { /* ignorar */ }
+  });
+
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
 
